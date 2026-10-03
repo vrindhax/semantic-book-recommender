@@ -3,36 +3,42 @@
       "id": 1,
       "title": "Dune",
       "author": "Frank Herbert",
+      "genre": "Science Fiction",
       "description": "On a desert planet, a young nobleman becomes entangled in a struggle over a rare spice, political betrayal, and a prophecy that could reshape the galaxy."
     },
     {
       "id": 2,
       "title": "Pride and Prejudice",
       "author": "Jane Austen",
+      "genre": "Romance",
       "description": "A witty young woman and a proud, wealthy gentleman must overcome first impressions and social expectations in Regency-era England."
     },
     {
       "id": 3,
       "title": "The Hobbit",
       "author": "J.R.R. Tolkien",
+      "genre": "Fantasy",
       "description": "A comfort-loving homebody is swept into a quest with dwarves to reclaim a treasure guarded by a dragon."
     },
     {
       "id": 4,
       "title": "Klara and the Sun",
       "author": "Kazuo Ishiguro",
+      "genre": "Science Fiction",
       "description": "An artificial friend observes the human world with devotion, questioning what it means to love and be loved."
     },
     {
       "id": 5,
       "title": "Gone Girl",
       "author": "Gillian Flynn",
+      "genre": "Thriller",
       "description": "When a woman vanishes on her anniversary, her husband becomes the prime suspect in a twisting tale of secrets and deception."
     },
     {
       "id": 6,
       "title": "Atomic Habits",
       "author": "James Clear",
+      "genre": "Non-Fiction",
       "description": "A practical guide to building good habits and breaking bad ones through small, consistent daily changes."
     }
   ]

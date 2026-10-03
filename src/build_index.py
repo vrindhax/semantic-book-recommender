@@ -46,7 +46,7 @@ def main() -> None:
 
     # Metadata lets us filter later (e.g. by author) without re-embedding.
     metadatas = [
-        {"title": book["title"], "author": book["author"]}
+        {"title": book["title"], "author": book["author"], "genre": book["genre"]}
         for book in books
     ]
 

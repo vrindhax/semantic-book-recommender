@@ -30,27 +30,36 @@ def main() -> None:
         if not query:
             continue
 
+        genre_filter = input("Genre (press Enter to skip)> ").strip()
+
         query_vector = model.encode(query).tolist()
 
-        # Chroma does the similarity search internally — no manual loop needed.
-        results = collection.query(
-            query_embeddings=[query_vector],
-            n_results=3,
-        )
+        # Build the query kwargs dynamically so we only filter when asked.
+        query_kwargs = {
+            "query_embeddings": [query_vector],
+            "n_results": 3,
+        }
+        if genre_filter:
+            query_kwargs["where"] = {"genre": genre_filter}
 
-        print(f"\nQuery: \"{query}\"")
-        print("Top matches:\n")
+        results = collection.query(**query_kwargs)
 
         documents = results["documents"][0]
         metadatas = results["metadatas"][0]
         distances = results["distances"][0]
 
+        print(f"\nQuery: \"{query}\"" + (f" | Genre: {genre_filter}" if genre_filter else ""))
+        print("Top matches:\n")
+
+        if not documents:
+            print("No books matched that filter.\n")
+            continue
+
         for rank, (doc, meta, dist) in enumerate(
             zip(documents, metadatas, distances), start=1
         ):
-            print(f"{rank}. {meta['title']} by {meta['author']} — distance: {dist:.4f}")
+            print(f"{rank}. {meta['title']} by {meta['author']} ({meta['genre']}) — distance: {dist:.4f}")
             print(f"   {doc}\n")
-
 
 if __name__ == "__main__":
     main()
