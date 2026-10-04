@@ -26,3 +26,6 @@ models/
 .vscode/
 .cursor/
 .DS_Store
+
+# Real datasets
+ data/books_real.csv
