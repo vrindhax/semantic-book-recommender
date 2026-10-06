@@ -7,9 +7,9 @@ import chromadb
 from sentence_transformers import SentenceTransformer
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "books.json"
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "books_real_clean.json"
 CHROMA_PATH = Path(__file__).resolve().parent.parent / "chroma_db"
-COLLECTION_NAME = "books"
+COLLECTION_NAME = "books_real"
 
 
 def load_books(path: Path) -> list[dict]:
@@ -50,12 +50,19 @@ def main() -> None:
         for book in books
     ]
 
-    collection.add(
-        ids=ids,
-        embeddings=embeddings,
-        documents=book_texts,
-        metadatas=metadatas,
-    )
+    # Chroma caps how many items can be added in a single call, so we
+    # split everything into smaller batches and add them one at a time.
+    BATCH_SIZE = 5000
+
+    for start in range(0, len(ids), BATCH_SIZE):
+        end = start + BATCH_SIZE
+        collection.add(
+            ids=ids[start:end],
+            embeddings=embeddings[start:end],
+            documents=book_texts[start:end],
+            metadatas=metadatas[start:end],
+        )
+        print(f"  Added batch {start}–{min(end, len(ids))} of {len(ids)}")
 
     print(f"Indexed {collection.count()} books into Chroma at '{CHROMA_PATH}'.")
 

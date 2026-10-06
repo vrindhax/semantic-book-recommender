@@ -7,7 +7,7 @@ from sentence_transformers import SentenceTransformer
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 CHROMA_PATH = Path(__file__).resolve().parent.parent / "chroma_db"
-COLLECTION_NAME = "books"
+COLLECTION_NAME = "books_real"
 
 
 def main() -> None:
