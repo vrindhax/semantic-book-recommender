@@ -19,8 +19,19 @@ def load_model() -> SentenceTransformer:
 
 @st.cache_resource
 def load_collection():
-    """Connect to the persistent Chroma collection once per server session."""
+    """Connect to Chroma, building the index first if it doesn't exist yet."""
     client = chromadb.PersistentClient(path=str(CHROMA_PATH))
+    try:
+        collection = client.get_collection(COLLECTION_NAME)
+        if collection.count() > 0:
+            return collection
+    except Exception:
+        pass  # collection doesn't exist yet, so build it below
+
+    from build_index import main as build_index  # src/ is on the import path
+
+    with st.spinner("First launch: building the search index (a few minutes)..."):
+        build_index()
     return client.get_collection(COLLECTION_NAME)
 
 
